@@ -1,0 +1,32 @@
+{
+  "name": "banorte-payworks",
+  "version": "0.0.1",
+  "description": "Banorte Payworks for Node.js",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/4yopping/banorte-payworks"
+  },
+  "keywords": [
+    "banorte",
+    "payworks",
+    "banks",
+    "transaction banking",
+    "bank transaction"
+  ],
+  "license": "MIT",
+  "author": "Marco Godínez <markotom@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/4yopping/banorte-payworks/issues"
+  },
+  "homepage": "https://github.com/4yopping/banorte-payworks",
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
