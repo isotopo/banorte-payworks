@@ -12,13 +12,9 @@ let options = {
 }
 
 let methods = Object.getOwnPropertyNames(Payworks.prototype)
-let publicMethods = methods.filter(m => /^(?!_)(?!constructor)/.test(m))
-let privateMethods = methods.filter(m => /^_/.test(m))
+methods = methods.filter(m => /^(?!constructor)/.test(m))
 
 describe('Banorte Payworks', function () {
-  before(function () {
-  })
-
   it('should be a class', function () {
     assert.equal(typeof Payworks, 'function')
     assert(/^\s*class\s+/.test(Payworks.toString()), 'should be a class')
@@ -44,12 +40,13 @@ describe('Banorte Payworks', function () {
   })
 
   it('should have only this set of public methods', function () {
-    let methods = [
-      'sell',
+    let fns = [
+      'auth',
+      'forceAuth',
       'preAuth',
       'postAuth',
       'reAuth',
-      'return',
+      'refund',
       'cancel',
       'reverse',
       'close',
@@ -59,10 +56,10 @@ describe('Banorte Payworks', function () {
       'reactivate'
     ]
 
-    assert.equal(methods.length, publicMethods.length)
+    assert.equal(fns.length, methods.length)
 
-    for (let method of methods) {
-      assert.equal(typeof Payworks.prototype[method], 'function')
+    for (let fn of fns) {
+      assert.equal(typeof Payworks.prototype[fn], 'function')
     }
   })
 })
