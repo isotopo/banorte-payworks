@@ -91,4 +91,103 @@ describe('Utils#Request', function () {
       done('should throw an error')
     })
   })
+
+  it('should make a request only with valid `cmd_trans`', function (done) {
+    request(Object.assign(params, {
+      cmd_trans: 'PREAUHT'
+    }), function (err) {
+      if (!err) return done('should throw an error')
+
+      assert(err)
+      assert.equal(err.message, 'cmd_trans is invalid')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'AUTHH'
+    }), function (err) {
+      if (!err) return done('should throw an error')
+
+      assert(err)
+      assert.equal(err.message, 'cmd_trans is invalid')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'AUTH'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'FORCED_AUTH'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'PREAUTH'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'REAUTH'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'POSTAUTH'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'REFUND'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'VOID'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'REVERSAL'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'MCHNT_SETTLEMENT'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'GROUP_SETTLEMENT'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'VERIFY'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'LOCK'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+    })
+
+    request(Object.assign(params, {
+      cmd_trans: 'UNLOCK'
+    }), function (err) {
+      if (err) return done('should not throw an error')
+      done()
+    })
+  })
 })
