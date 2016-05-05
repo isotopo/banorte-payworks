@@ -74,7 +74,7 @@ describe('Payworks#preAuth', function () {
       card_number: '4111111111111111',
       card_exp: '1220'})
     .then(function (res) {
-      console.log('res', res.headers)
+      assert(res.headers)
       assert(this instanceof PromiseEmitter)
       done()
       return 'hola'
