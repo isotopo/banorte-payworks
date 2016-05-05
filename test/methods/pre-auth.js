@@ -52,4 +52,12 @@ describe('Payworks#preAuth', function () {
       }
     })
   })
+
+  it('should be a yieldable', function * () {
+    let pre = yield payworks.preAuth(this.params)
+
+    pre.on('error', function () {
+      console.log('wow!')
+    })
+  })
 })
