@@ -35,10 +35,10 @@ describe('Banorte Payworks', function () {
   it('should be instanced with options', function () {
     let payworks = new Payworks(options)
 
-    assert.equal(payworks.username, options.username)
+    assert.equal(payworks.user, options.user)
     assert.equal(payworks.password, options.password)
-    assert.equal(payworks.merchant, options.merchant)
-    assert.equal(payworks.terminal, options.terminal)
+    assert.equal(payworks.merchant_id, options.merchant)
+    assert.equal(payworks.terminal_id, options.terminal)
   })
 
   it('should have only this set of public methods', function () {

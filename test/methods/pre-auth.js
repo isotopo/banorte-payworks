@@ -3,14 +3,19 @@
 const assert = require('assert')
 const Payworks = require('../../lib')
 const sinon = require('sinon')
+const PromiseEmitter = require('../../lib/utils/promiseEmitter')
 
 let payworks = new Payworks({
-  username: 'a7652969',
-  password: 'a7652969',
-  merchant: '7652969',
-  terminal: '07652969'
+  cmd_trans: 'PREAUTH',
+  merchant_id: '121221',
+  user: 'AB912899',
+  password: 'AB912899',
+  terminal_id: '12212ABC',
+  amount: 189.00,
+  entry_mode: 'MANUAL',
+  card_number: '4111111111111111',
+  card_exp: '1220'
 })
-
 describe('Payworks#preAuth', function () {
   beforeEach(function () {
     this.params = {
@@ -45,7 +50,6 @@ describe('Payworks#preAuth', function () {
           assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
           assert.equal(e[0].type, 'any.required')
         }
-
         done()
       } catch (e) {
         done(e)
@@ -53,11 +57,19 @@ describe('Payworks#preAuth', function () {
     })
   })
 
-  it('should be a yieldable', function * () {
-    let pre = yield payworks.preAuth(this.params)
-
-    pre.on('error', function () {
-      console.log('wow!')
+  it('should be a yieldable', function * (done) {
+    let res = payworks.preAuth(this.params)
+    .then(function (res) {
+      assert(this instanceof PromiseEmitter)
+      done()
+      return 'hola'
     })
+    .catch(function (error) {
+      assert(this instanceof PromiseEmitter)
+      done()
+      return error
+    })
+    res = yield res
+    assert(res === 'hola')
   })
 })

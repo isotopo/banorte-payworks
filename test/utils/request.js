@@ -105,7 +105,6 @@ describe('Utils#Request', function () {
       cmd_trans: 'PREAUHT'
     }), function (err) {
       if (!err) return done('should throw an error')
-
       assert(err)
       assert.equal(err.message, 'cmd_trans is invalid')
     })
