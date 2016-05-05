@@ -7,14 +7,10 @@ const PromiseEmitter = require('../../lib/utils/promiseEmitter')
 
 let payworks = new Payworks({
   cmd_trans: 'PREAUTH',
-  merchant_id: '121221',
+  merchant: '121221',
   user: 'AB912899',
   password: 'AB912899',
-  terminal_id: '12212ABC',
-  amount: 189.00,
-  entry_mode: 'MANUAL',
-  card_number: '4111111111111111',
-  card_exp: '1220'
+  terminal: '12212ABC'
 })
 describe('Payworks#preAuth', function () {
   beforeEach(function () {
@@ -65,6 +61,26 @@ describe('Payworks#preAuth', function () {
       return 'hola'
     })
     .catch(function (error) {
+      assert(this instanceof PromiseEmitter)
+      done()
+      return error
+    })
+    res = yield res
+    assert(res === 'hola')
+  })
+  it('obtain the correct answer', function * (done) {
+    let res = payworks.preAuth({ amount: 189.00,
+      entry_mode: 'MANUAL',
+      card_number: '4111111111111111',
+      card_exp: '1220'})
+    .then(function (res) {
+      console.log('res', res.headers)
+      assert(this instanceof PromiseEmitter)
+      done()
+      return 'hola'
+    })
+    .catch(function (error) {
+      console.log('errr', error)
       assert(this instanceof PromiseEmitter)
       done()
       return error
