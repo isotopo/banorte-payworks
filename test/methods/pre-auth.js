@@ -4,16 +4,15 @@ const assert = require('assert')
 const Payworks = require('../../lib')
 const sinon = require('sinon')
 
-let options = {
+let payworks = new Payworks({
   username: 'a7652969',
   password: 'a7652969',
   merchant: '7652969',
   terminal: '07652969'
-}
+})
 
 describe('Payworks#preAuth', function () {
   beforeEach(function () {
-    this.payworks = new Payworks(options)
     this.params = {
       amount: 102.00,
       reference: 2187218721
@@ -24,12 +23,33 @@ describe('Payworks#preAuth', function () {
     this.spy = sinon.spy()
   })
 
-  it('should validate params', function (done) {
-    this.payworks.preAuth({}, this.spy)
-    .on('error', (e) => {
-      assert(this.spy.calledOnce)
-      assert.equal(e.name, 'ValidationError')
+  it('should failed when params are missing', function (done) {
+    try {
+      payworks.preAuth()
+      done('should throw an error when params are missing')
+    } catch (e) {
       done()
+    }
+  })
+
+  it('should validate params', function (done) {
+    let required = ['amount', 'reference']
+
+    payworks.preAuth({}).on('error', function (err) {
+      try {
+        assert.equal(err.name, 'ValidationError')
+
+        for (let param of required) {
+          // Get error from each path
+          let e = err.details.filter(e => e.path === param)
+          assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
+          assert.equal(e[0].type, 'any.required')
+        }
+
+        done()
+      } catch (e) {
+        done(e)
+      }
     })
   })
 })
