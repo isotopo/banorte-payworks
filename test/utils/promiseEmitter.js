@@ -24,12 +24,15 @@ describe('promiseEmitter', function () {
     })
       .then(function (resOfthen) {
         assert(resOfthen === 'tested')
+        if (Math.random() < 0.5) {
+          throw 'error to test'
+        }
         done()
       })
       .catch(function (error) {
         assert(this instanceof EventEmitter)
         assert(this instanceof PromiseEmitter)
-        assert(error > 0.33)
+        assert(error > 0.33 || error === 'error to test')
         done()
       })
     this.e = e
