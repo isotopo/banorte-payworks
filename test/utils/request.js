@@ -32,6 +32,14 @@ describe('Utils#Request', function () {
     })
   })
 
+  it('should make a request with yieldables', function * () {
+    let res = yield request(params)
+
+    assert.equal(res.statusCode, 200)
+    assert.equal(res.headers.codigo_payw, 'PAYW-3002')
+    assert.equal(res.headers.resultado_payw, 'R')
+  })
+
   it('should not make a request without `user` param', function (done) {
     request({
       password: params.password,

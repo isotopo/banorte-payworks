@@ -27,10 +27,14 @@
   },
   "homepage": "https://github.com/4yopping/banorte-payworks",
   "devDependencies": {
+    "co-mocha": "^1.1.2",
     "debug": "^2.2.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.4"
   },
   "dependencies": {
+    "co": "^4.6.0",
+    "joi": "^8.0.5",
     "request": "^2.72.0"
   }
 }
