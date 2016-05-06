@@ -58,6 +58,7 @@ describe('Payworks#preAuth', function () {
 
   it('should obtain a result with a yieldable', function * () {
     let res = yield payworks.preAuth(this.params)
+    console.log('res', res)
     assert(res.resultado_payw)
   })
 
