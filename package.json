@@ -29,6 +29,7 @@
   "devDependencies": {
     "co-mocha": "^1.1.2",
     "debug": "^2.2.0",
+    "git-hooks": "^1.0.2",
     "mocha": "^2.4.5",
     "sinon": "^1.17.4"
   },

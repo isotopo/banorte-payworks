@@ -3,6 +3,7 @@
 const assert = require('assert')
 const EventEmitter = require('events')
 const PromiseEmitter = require('../../lib/utils/promiseEmitter')
+
 describe('Utils#promiseEmitter', function () {
   it('should have a `then` and `catch` functions', function (done) {
     let e = new PromiseEmitter(function (res, rej) {
