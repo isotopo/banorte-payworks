@@ -3,9 +3,8 @@
 const assert = require('assert')
 const EventEmitter = require('events')
 const PromiseEmitter = require('../../lib/utils/promiseEmitter')
-describe('promiseEmitter', function () {
-  it('The promiseEmitter class have a then and catch function', function (
-    done) {
+describe('Utils#promiseEmitter', function () {
+  it('should have a `then` and `catch` functions', function (done) {
     let e = new PromiseEmitter(function (res, rej) {
       assert(this instanceof PromiseEmitter)
       let random = Math.random()
@@ -25,24 +24,37 @@ describe('promiseEmitter', function () {
       .then(function (resOfthen) {
         assert(resOfthen === 'tested')
         if (Math.random() < 0.5) {
-          throw 'error to test'
+          throw new Error('error to test')
         }
         done()
       })
       .catch(function (error) {
         assert(this instanceof EventEmitter)
         assert(this instanceof PromiseEmitter)
-        assert(error > 0.33 || error === 'error to test')
+        assert(error > 0.33 || error.message === 'error to test')
         done()
       })
     this.e = e
   })
 
-  it('The promiseEmitter class is a event emitter', function (done) {
+  it('should be an event emitter', function (done) {
     this.e.on('test', function (send) {
       assert(send === 'hola')
       done()
     })
       .emit('test', 'hola')
+  })
+
+  it('should return a chainable promises', function * () {
+    let e = new PromiseEmitter((resolve) => resolve())
+
+    let promise = e.then(function () {
+      return new Promise((resolve, reject) => {
+        resolve('hola')
+      })
+    })
+
+    let result = yield promise
+    assert.equal(result, 'hola')
   })
 })
