@@ -5,10 +5,10 @@ const Payworks = require('../../lib')
 
 let payworks = new Payworks({
   mode: 'AUT',
-  merchant: '7652969',
-  user: 'a7652969',
-  password: 'a7652969',
-  terminal: '07652969'
+  merchant: '121221',
+  user: 'AB912899',
+  password: 'AB912899',
+  terminal: '12212ABC'
 })
 
 describe('Payworks#preAuth', function () {
@@ -74,6 +74,10 @@ describe('Payworks#preAuth', function () {
     .on('approved', function () {
       done()
     }).on('declined', function () {
+      done()
+    }).on('rejected', function () {
+      done()
+    }).on('notAnswer', function () {
       done()
     })
   })
