@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "docs": "jsdoc -R readme.md -c jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "co-mocha": "^1.1.2",
     "debug": "^2.2.0",
     "git-hooks": "^1.0.2",
+    "minami": "^1.1.1",
     "mocha": "^2.4.5",
     "sinon": "^1.17.4"
   },
