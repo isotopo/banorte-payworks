@@ -11,10 +11,11 @@ let options = {
   terminal: '07652969'
 }
 
-let methods = Object.getOwnPropertyNames(Payworks.prototype)
-methods = methods.filter(m => /^(?!constructor)/.test(m))
+let publicMethods = Object.getOwnPropertyNames(Payworks.prototype)
+publicMethods = publicMethods.filter(m => /^(?!constructor)/.test(m))
+let staticMethods = Object.keys(Payworks).filter(fn => typeof Payworks[fn] === 'function')
 
-describe('Banorte Payworks', function () {
+describe('Payworks', function () {
   it('should be a class', function () {
     assert.equal(typeof Payworks, 'function')
     assert(/^\s*class\s+/.test(Payworks.toString()),
@@ -58,9 +59,20 @@ describe('Banorte Payworks', function () {
       'reactivate'
     ]
 
-    assert.equal(fns.length, methods.length)
+    assert.equal(fns.length, publicMethods.length)
     for (let fn of fns) {
       assert.equal(typeof Payworks.prototype[fn], 'function')
+    }
+  })
+
+  it('should have only this set of static methods', function () {
+    let fns = [
+      'request'
+    ]
+
+    assert.equal(fns.length, staticMethods.length)
+    for (let fn of fns) {
+      assert.equal(typeof Payworks[fn], 'function')
     }
   })
 })

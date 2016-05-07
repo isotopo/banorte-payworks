@@ -55,14 +55,33 @@ describe('Payworks#preAuth', function () {
       }
     })
   })
-  it('should obtain a result with a yieldable', function * () {
-    let res = yield payworks.preAuth(this.params)
-    assert(res.resultado_payw)
+
+  it('should obtain a result with callbacks', function (done) {
+    payworks.preAuth(this.params, function (error, body, response) {
+      if (error) {
+        try {
+          assert(/^(R|D|T)$/i.test(error.resultado_payw), 'should throw a transactional error')
+          return done()
+        } catch (e) {
+          return done(e)
+        }
+      }
+
+      assert(body.resultado_payw)
+      assert(response.headers)
+      assert.equal(response.headers.resultado_payw, body.resultado_payw)
+      done()
+    })
   })
 
-  it('should obtain a result with thenable', function * (done) {
+  it('should obtain a result with yieldables', function * () {
+    let body = yield payworks.preAuth(this.params)
+    assert(body.resultado_payw)
+  })
+
+  it('should obtain a result with thenables', function * (done) {
     payworks.preAuth(this.params)
-    .then(function (body, res) {
+    .then(function (body) {
       assert(body.resultado_payw)
       done()
     })
