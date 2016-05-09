@@ -11,17 +11,15 @@ let options = {
   terminal: '07652969'
 }
 
-let methods = Object.getOwnPropertyNames(Payworks.prototype)
-let publicMethods = methods.filter(m => /^(?!_)(?!constructor)/.test(m))
-let privateMethods = methods.filter(m => /^_/.test(m))
+let publicMethods = Object.getOwnPropertyNames(Payworks.prototype)
+publicMethods = publicMethods.filter(m => /^(?!constructor)/.test(m))
+let staticMethods = Object.keys(Payworks).filter(fn => typeof Payworks[fn] === 'function')
 
-describe('Banorte Payworks', function () {
-  before(function () {
-  })
-
+describe('Payworks', function () {
   it('should be a class', function () {
     assert.equal(typeof Payworks, 'function')
-    assert(/^\s*class\s+/.test(Payworks.toString()), 'should be a class')
+    assert(/^\s*class\s+/.test(Payworks.toString()),
+      'should be a class')
   })
 
   it('should be an instance of Payworks', function () {
@@ -31,25 +29,27 @@ describe('Banorte Payworks', function () {
 
   it('should be an instance of EventEmitter', function () {
     let payworks = new Payworks()
-    assert(payworks instanceof EventEmitter, 'should be an instance of EventEmitter')
+    assert(payworks instanceof EventEmitter,
+      'should be an instance of EventEmitter')
   })
 
   it('should be instanced with options', function () {
     let payworks = new Payworks(options)
 
-    assert.equal(payworks.username, options.username)
+    assert.equal(payworks.user, options.user)
     assert.equal(payworks.password, options.password)
-    assert.equal(payworks.merchant, options.merchant)
-    assert.equal(payworks.terminal, options.terminal)
+    assert.equal(payworks.merchant_id, options.merchant)
+    assert.equal(payworks.terminal_id, options.terminal)
   })
 
   it('should have only this set of public methods', function () {
-    let methods = [
-      'sell',
+    let fns = [
+      'auth',
+      'forceAuth',
       'preAuth',
       'postAuth',
       'reAuth',
-      'return',
+      'refund',
       'cancel',
       'reverse',
       'close',
@@ -59,10 +59,20 @@ describe('Banorte Payworks', function () {
       'reactivate'
     ]
 
-    assert.equal(methods.length, publicMethods.length)
+    assert.equal(fns.length, publicMethods.length)
+    for (let fn of fns) {
+      assert.equal(typeof Payworks.prototype[fn], 'function')
+    }
+  })
 
-    for (let method of methods) {
-      assert.equal(typeof Payworks.prototype[method], 'function')
+  it('should have only this set of static methods', function () {
+    let fns = [
+      'request'
+    ]
+
+    assert.equal(fns.length, staticMethods.length)
+    for (let fn of fns) {
+      assert.equal(typeof Payworks[fn], 'function')
     }
   })
 })
