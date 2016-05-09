@@ -1,0 +1,11 @@
+language: node_js
+
+node_js:
+  - 5
+  - 6
+
+notifications:
+  slack: '4yopping:ALhrivGHquJzo5MPODfnRIvI'
+
+script:
+  - npm test
