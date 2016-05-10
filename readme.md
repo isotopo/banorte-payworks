@@ -1,6 +1,8 @@
 Banorte Payworks for Node.js
 ================================
 
+[![Build Status](https://travis-ci.org/4yopping/banorte-payworks.svg?branch=master)](https://travis-ci.org/4yopping/banorte-payworks)
+
 ## Install
 
 ```bash
