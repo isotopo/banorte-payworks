@@ -1,6 +1,6 @@
 {
   "name": "banorte-payworks",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Banorte Payworks for Node.js",
   "main": "./lib",
   "directories": {
