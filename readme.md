@@ -78,6 +78,63 @@ payworks.preAuth({
 })
 ```
 
+## API Documentation
+
+Please read this [extended documentation](http://4yopping.github.io/banorte-payworks).
+
+### Payworks
+
+#### Transactions
+
+##### Payworks#auth(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#forceAuth(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#preAuth(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#postAuth(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#reAuth(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#refund(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#cancel(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#reverse(\<object\> params, [\<object\> options,] \<function\> callback)
+
+#### Commands
+
+##### Payworks#close(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#closeGroup(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#postAuth(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#verify(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#suspend(\<object\> params, [\<object\> options,] \<function\> callback)
+##### Payworks#reactivate(\<object\> params, [\<object\> options,] \<function\> callback)
+
+### Events
+
+##### *.on(\<string\> eventName)
+
+All methods have a method to listen events when a request has been finished.
+
+`approved`
+
+When a transaction or command has been approved.
+
+`declined`
+
+When a transaction has been declided. This event will be only emitted by transaction calls (auth, forceAuth, preAuth, postAuth, reAuth).
+
+`rejected`
+
+When a transaction or command has been rejected by Payworks.
+
+`notAnswer`
+
+When a transaction or command without response from Payworks.
+
+
 ## License
 
-MIT
+The MIT License (MIT)
+
+Copyright (c) 2016 *Futurecommerce* and all related trademarks.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
