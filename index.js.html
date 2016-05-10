@@ -40,12 +40,8 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict'
 
-const co = require('co')
 const EventEmitter = require('events')
-const request = require('./utils').request
-const validate = require('./utils').validate
 const joi = require('joi')
-const PromiseEmitter = require('./utils/promiseEmitter')
 
 /**
  * @class
@@ -68,41 +64,81 @@ class Payworks extends EventEmitter {
   }
 
   /**
-   * This is a description
+   * Request for an authorization
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {number} params.amount - Amount
+   * @param {string} params.reference - Reference
+   * @param {string} params.entry_code - Entry Code
+   * @param {string} params.card_number - Card Number
+   * @param {string} params.card_exp - Card Expiry Dates (MM/YY)
+   * @param {string} params.security_code - Security Code
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
-  auth (params, options, callback) {}
+  auth (params, options, callback) {
+    let schema = {
+      amount: joi.number().required(),
+      reference: joi.string(),
+      entry_mode: joi.string().max(20).required(),
+      card_number: joi.string().max(20).required(),
+      card_exp: joi.string().max(4).required(),
+      security_code: joi.string().max(4).required()
+    }
+
+    return Payworks.request.call(this, 'AUTH', schema, params, options, callback)
+  }
 
   /**
-   * This is a description
+   * Request for a force authorization
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {number} params.amount - Amount
+   * @param {string} params.reference - Reference
+   * @param {string} params.entry_code - Entry Code
+   * @param {string} params.card_number - Card Number
+   * @param {string} params.card_exp - Card Expiry Dates (MM/YY)
+   * @param {string} params.security_code - Security Code
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
-  forceAuth (params, options, callback) {}
+  forceAuth (params, options, callback) {
+    let schema = {
+      amount: joi.number().required(),
+      reference: joi.string(),
+      entry_mode: joi.string().max(20).required(),
+      card_number: joi.string().max(20).required(),
+      card_exp: joi.string().max(4).required(),
+      security_code: joi.string().max(4).required()
+    }
+
+    return Payworks.request.call(this, 'FORCED_AUTH', schema, params, options, callback)
+  }
 
   /**
-   * This is a description
+   * Request for a preauthorization
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {number} params.amount - Amount
+   * @param {string} params.reference - Reference
+   * @param {string} params.entry_code - Entry Code
+   * @param {string} params.card_number - Card Number
+   * @param {string} params.card_exp - Card Expiry Dates (MM/YY)
+   * @param {string} params.security_code - Security Code
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   preAuth (params, options, callback) {
     let schema = {
@@ -114,325 +150,214 @@ class Payworks extends EventEmitter {
       security_code: joi.string().max(4).required()
     }
 
-    return Payworks.request.call(this, schema, params, options, callback)
+    return Payworks.request.call(this, 'PREAUTH', schema, params, options, callback)
   }
 
   /**
-   * This is a description
+   * Request for a postauthorization
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {number} params.amount - Amount
+   * @param {string} params.reference - Reference
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
-  postAuth (params, options, callback) {}
+  postAuth (params, options, callback) {
+    let schema = {
+      amount: joi.number().required(),
+      reference: joi.string().required()
+    }
+
+    return Payworks.request.call(this, 'POSTAUTH', schema, params, options, callback)
+  }
 
   /**
-   * This is a description
+   * Request for a reauthorization
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {number} params.amount - Amount
+   * @param {string} params.reference - Reference
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
-  reAuth (params, options, callback) {}
+  reAuth (params, options, callback) {
+    let schema = {
+      amount: joi.number().required(),
+      reference: joi.string().required()
+    }
+
+    return Payworks.request.call(this, 'REAUTH', schema, params, options, callback)
+  }
 
   /**
-   * This is a description
+   * Request for a refund
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {number} params.amount - Amount
+   * @param {string} params.reference - Reference
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
-  refund (params, options, callback) {}
+  refund (params, options, callback) {
+    let schema = {
+      amount: joi.number().required(),
+      reference: joi.string().required()
+    }
+
+    return Payworks.request.call(this, 'REFUND', schema, params, options, callback)
+  }
 
   /**
-   * This is a description
+   * Request for a cancellation
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {string} params.reference - Reference
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   cancel (params, options, callback) {
+    let schema = {
+      reference: joi.string().required()
+    }
 
+    return Payworks.request.call(this, 'VOID', schema, params, options, callback)
   }
 
   /**
-   * This is a description
+   * Request for a reverse
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {string} params.reference - Reference
+   * @param {string} params.control_number - Control Number
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   reverse (params, options, callback) {
-    let e = new PromiseEmitter(function (resolve, reject) {
-      co(function * () {
-        yield validate(params, {
-          amount: joi.number().required()
-        })
-        return yield request({
-          cmd_trans: 'PREAUTH',
-          user: this.username,
-          password: this.password,
-          merchant_id: this.merchant
-        })
-      })
-        .then(function (resRequest) {
-          e.emit('resolve', resRequest)
-          if (typeof callback === 'function') {
-            resolve(callback(null, resRequest))
-            return
-          }
-          resolve(resRequest)
-        })
-        .catch(function (error) {
-          e.emit('error', error)
-          if (typeof callback === 'function') {
-            reject(callback(error, null))
-            return
-          }
-          reject(error)
-        })
-    })
-    return e
+    let schema = {
+      reference: joi.string().required(),
+      control_number: joi.string().max(30)
+    }
+
+    return Payworks.request.call(this, 'REVERSAL', schema, params, options, callback)
   }
 
   /**
-   * This is a description
+   * Request for closing a transaction
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   close (params, options, callback) {
-    let e = new PromiseEmitter(function (resolve, reject) {
-      co(function * () {
-        yield validate(params, {
-          amount: joi.number().required()
-        })
-        return yield request({
-          cmd_trans: 'PREAUTH',
-          user: this.username,
-          password: this.password,
-          merchant_id: this.merchant
-        })
-      })
-        .then(function (resRequest) {
-          e.emit('resolve', resRequest)
-          if (typeof callback === 'function') {
-            resolve(callback(null, resRequest))
-            return
-          }
-          resolve(resRequest)
-        })
-        .catch(function (error) {
-          e.emit('error', error)
-          if (typeof callback === 'function') {
-            reject(callback(error, null))
-            return
-          }
-          reject(error)
-        })
-    })
-    return e
+    let schema = {}
+
+    return Payworks.request.call(this, 'MCHNT_SETTLEMENT', schema, params, options, callback)
   }
 
   /**
-   * This is a description
+   * Request for closing a transaction group
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {string} params.group - Group
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   closeGroup (params, options, callback) {
-    let e = new PromiseEmitter(function (resolve, reject) {
-      co(function * () {
-        yield validate(params, {
-          amount: joi.number().required()
-        })
-        return yield request({
-          cmd_trans: 'PREAUTH',
-          user: this.username,
-          password: this.password,
-          merchant_id: this.merchant
-        })
-      })
-        .then(function (resRequest) {
-          e.emit('resolve', resRequest)
-          if (typeof callback === 'function') {
-            resolve(callback(null, resRequest))
-            return
-          }
-          resolve(resRequest)
-        })
-        .catch(function (error) {
-          e.emit('error', error)
-          if (typeof callback === 'function') {
-            reject(callback(error, null))
-            return
-          }
-          reject(error)
-        })
-    })
-    return e
+    let schema = {
+      group: joi.string().required()
+    }
+
+    return Payworks.request.call(this, 'GROUP_SETTLEMENT', schema, params, options, callback)
   }
 
   /**
-   * This is a description
+   * Request for a transaction verification
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {string} params.reference - Reference
+   * @param {string} params.control_number - Control Number
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   verify (params, options, callback) {
-    let e = new PromiseEmitter(function (resolve, reject) {
-      co(function * () {
-        yield validate(params, {
-          amount: joi.number().required()
-        })
-        return yield request({
-          cmd_trans: 'PREAUTH',
-          user: this.username,
-          password: this.password,
-          merchant_id: this.merchant
-        })
-      })
-        .then(function (resRequest) {
-          e.emit('resolve', resRequest)
-          if (typeof callback === 'function') {
-            resolve(callback(null, resRequest))
-            return
-          }
-          resolve(resRequest)
-        })
-        .catch(function (error) {
-          e.emit('error', error)
-          if (typeof callback === 'function') {
-            reject(callback(error, null))
-            return
-          }
-          reject(error)
-        })
-    })
-    return e
+    let schema = {
+      reference: joi.string(),
+      control_number: joi.string()
+    }
+
+    return Payworks.request.call(this, 'VERIFY', schema, params, options, callback)
   }
 
   /**
-   * This is a description
+   * Request for suspend a transaction
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {string} params.reference - Reference
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   suspend (params, options, callback) {
-    let e = new PromiseEmitter(function (resolve, reject) {
-      co(function * () {
-        yield validate(params, {
-          amount: joi.number().required()
-        })
-        return yield request({
-          cmd_trans: 'PREAUTH',
-          user: this.username,
-          password: this.password,
-          merchant_id: this.merchant
-        })
-      })
-        .then(function (resRequest) {
-          e.emit('resolve', resRequest)
-          if (typeof callback === 'function') {
-            resolve(callback(null, resRequest))
-            return
-          }
-          resolve(resRequest)
-        })
-        .catch(function (error) {
-          e.emit('error', error)
-          if (typeof callback === 'function') {
-            reject(callback(error, null))
-            return
-          }
-          reject(error)
-        })
-    })
-    return e
+    let schema = {
+      reference: joi.string().required()
+    }
+
+    return Payworks.request.call(this, 'LOCK', schema, params, options, callback)
   }
 
   /**
-   * This is a description
+   * Request for reactivate a transaction
    *
    * @public
    *
-   * @param {Object} params
+   * @param {Object} params - Request params
+   * @param {string} params.reference - Reference
    * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
-   * @return {EventEmitter}
+   * @return {PromiseEmitter}
    */
   reactivate (params, options, callback) {
-    let e = new PromiseEmitter(function (resolve, reject) {
-      co(function * () {
-        yield validate(params, {
-          amount: joi.number().required()
-        })
-        return yield request({
-          cmd_trans: 'PREAUTH',
-          user: this.username,
-          password: this.password,
-          merchant_id: this.merchant
-        })
-      })
-        .then(function (resRequest) {
-          e.emit('resolve', resRequest)
-          if (typeof callback === 'function') {
-            resolve(callback(null, resRequest))
-            return
-          }
-          resolve(resRequest)
-        })
-        .catch(function (error) {
-          e.emit('error', error)
-          if (typeof callback === 'function') {
-            reject(callback(error, null))
-            return
-          }
-          reject(error)
-        })
-    })
-    return e
+    let schema = {
+      reference: joi.string().required()
+    }
+
+    return Payworks.request.call(this, 'UNLOCK', schema, params, options, callback)
   }
 }
 
@@ -444,7 +369,7 @@ class Payworks extends EventEmitter {
  * @method Payworks#request
  *
  * @param {Object} schema
- * @param {Object} params
+ * @param {Object} params - Request params
  * @param {(Object|function|undefined)} options
  * @param {(function|undefined)} callback
  *
@@ -465,7 +390,7 @@ module.exports = Payworks
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat May 07 2016 01:49:04 GMT-0500 (CDT) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 10 2016 13:51:46 GMT-0500 (CDT) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
