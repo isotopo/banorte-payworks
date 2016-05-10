@@ -33,8 +33,7 @@ describe('Payworks#postAuth', function () {
       'amount',
       'reference'
     ]
-
-    payworks.postAuth({}).on('error', function (err) {
+    payworks.on('error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -49,6 +48,7 @@ describe('Payworks#postAuth', function () {
         done(e)
       }
     })
+    payworks.postAuth({})
   })
 
   it('should obtain a result with callbacks', function (done) {
@@ -84,8 +84,7 @@ describe('Payworks#postAuth', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.postAuth(this.params)
-    .on('approved', function () {
+    payworks.on('approved', function () {
       done()
     }).on('declined', function () {
       done()
@@ -94,5 +93,6 @@ describe('Payworks#postAuth', function () {
     }).on('notAnswer', function () {
       done()
     })
+    payworks.postAuth(this.params)
   })
 })

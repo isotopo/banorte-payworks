@@ -61,7 +61,7 @@ describe('Payworks#verify', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.verify(this.params)
+    payworks
     .on('approved', function () {
       done()
     }).on('declined', function () {
@@ -71,5 +71,6 @@ describe('Payworks#verify', function () {
     }).on('notAnswer', function () {
       done()
     })
+    .verify(this.params)
   })
 })

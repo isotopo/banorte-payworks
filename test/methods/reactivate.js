@@ -32,7 +32,8 @@ describe('Payworks#reactivate', function () {
       'reference'
     ]
 
-    payworks.reactivate({}).on('error', function (err) {
+    payworks
+    .on('error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -46,7 +47,7 @@ describe('Payworks#reactivate', function () {
       } catch (e) {
         done(e)
       }
-    })
+    }).reactivate({})
   })
 
   it('should obtain a result with callbacks', function (done) {
@@ -82,7 +83,7 @@ describe('Payworks#reactivate', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.reactivate(this.params)
+    payworks
     .on('approved', function () {
       done()
     }).on('declined', function () {
@@ -91,6 +92,6 @@ describe('Payworks#reactivate', function () {
       done()
     }).on('notAnswer', function () {
       done()
-    })
+    }).reactivate(this.params)
   })
 })

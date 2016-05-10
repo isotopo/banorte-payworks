@@ -34,7 +34,7 @@ describe('Payworks#reAuth', function () {
       'reference'
     ]
 
-    payworks.reAuth({}).on('error', function (err) {
+    payworks.on('error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -48,7 +48,7 @@ describe('Payworks#reAuth', function () {
       } catch (e) {
         done(e)
       }
-    })
+    }).reAuth({})
   })
 
   it('should obtain a result with callbacks', function (done) {
@@ -84,8 +84,7 @@ describe('Payworks#reAuth', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.reAuth(this.params)
-    .on('approved', function () {
+    payworks.on('approved', function () {
       done()
     }).on('declined', function () {
       done()
@@ -93,6 +92,6 @@ describe('Payworks#reAuth', function () {
       done()
     }).on('notAnswer', function () {
       done()
-    })
+    }).reAuth(this.params)
   })
 })

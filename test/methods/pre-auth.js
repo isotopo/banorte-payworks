@@ -38,8 +38,7 @@ describe('Payworks#preAuth', function () {
       'card_exp',
       'security_code'
     ]
-
-    payworks.preAuth({}).on('error', function (err) {
+    payworks.on('error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -54,6 +53,7 @@ describe('Payworks#preAuth', function () {
         done(e)
       }
     })
+    .preAuth({})
   })
 
   it('should obtain a result with callbacks', function (done) {
@@ -89,8 +89,7 @@ describe('Payworks#preAuth', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.preAuth(this.params)
-    .on('approved', function () {
+    payworks.on('approved', function () {
       done()
     }).on('declined', function () {
       done()
@@ -98,6 +97,6 @@ describe('Payworks#preAuth', function () {
       done()
     }).on('notAnswer', function () {
       done()
-    })
+    }).preAuth(this.params)
   })
 })
