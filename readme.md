@@ -8,7 +8,7 @@ Banorte Payworks for Node.js
 ## Install
 
 ```bash
-$ npm install banorte-payworks
+$ npm install banorte-payworks --save
 ```
 
 ## Usage
@@ -26,6 +26,12 @@ const payworks = new Payworks({
 ### Using events
 
 ```js
+payworks.on('auth.approved', function (body) {
+  // saving to database or something else
+}).on('auth.declined', function (err) {
+  // send a notification or something else
+})
+
 // Create a preauthorization
 payworks.preAuth({
   mount: 130.12,
@@ -33,12 +39,6 @@ payworks.preAuth({
   card_number: '4111111111111111',
   card_exp: '1220',
   security_code: '123'
-})
-.on('approved', function (body) {
-  // saving to database or something else
-})
-.on('declined', function (err) {
-  // send a notification or something else
 })
 ```
 
@@ -108,23 +108,23 @@ Please read this [extended documentation](http://4yopping.github.io/banorte-payw
 
 ### Events
 
-##### *.on(\<string\> eventName)
+##### payworks.on(\<string\> eventName)
 
-All methods have a method to listen events when a request has been finished.
+The payworks instance has a method to listen general events when a request has been finished.
 
-`approved`
+`[methodName].approved`
 
 When a transaction or command has been approved.
 
-`declined`
+`[methodName].declined`
 
-When a transaction has been declided. This event will be only emitted by transaction calls (auth, forceAuth, preAuth, postAuth, reAuth).
+When a transaction has been declined. This event will be only emitted by transaction calls (`auth`, `forceAuth`, `preAuth`, `postAuth`, `reAuth`).
 
-`rejected`
+`[methodName].rejected`
 
 When a transaction or command has been rejected by Payworks.
 
-`notAnswer`
+`[methodName].notAnswer`
 
 When a transaction or command without response from Payworks.
 
