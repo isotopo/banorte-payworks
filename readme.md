@@ -33,7 +33,7 @@ payworks.on('auth.approved', function (body) {
 })
 
 // Create a preauthorization
-payworks.preAuth({
+payworks.auth({
   mount: 130.12,
   entry_mode: 'MANUAL',
   card_number: '4111111111111111',
