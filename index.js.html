@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Payworks.html">Payworks</a><ul class='methods'><li data-type='method'><a href="Payworks.html#auth">auth</a></li><li data-type='method'><a href="Payworks.html#cancel">cancel</a></li><li data-type='method'><a href="Payworks.html#close">close</a></li><li data-type='method'><a href="Payworks.html#closeGroup">closeGroup</a></li><li data-type='method'><a href="Payworks.html#forceAuth">forceAuth</a></li><li data-type='method'><a href="Payworks.html#postAuth">postAuth</a></li><li data-type='method'><a href="Payworks.html#preAuth">preAuth</a></li><li data-type='method'><a href="Payworks.html#reactivate">reactivate</a></li><li data-type='method'><a href="Payworks.html#reAuth">reAuth</a></li><li data-type='method'><a href="Payworks.html#refund">refund</a></li><li data-type='method'><a href="Payworks.html#request">request</a></li><li data-type='method'><a href="Payworks.html#reverse">reverse</a></li><li data-type='method'><a href="Payworks.html#suspend">suspend</a></li><li data-type='method'><a href="Payworks.html#verify">verify</a></li></ul></li><li><a href="PromiseEmitter.html">PromiseEmitter</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Payworks.html">Payworks</a><ul class='methods'><li data-type='method'><a href="Payworks.html#auth">auth</a></li><li data-type='method'><a href="Payworks.html#cancel">cancel</a></li><li data-type='method'><a href="Payworks.html#close">close</a></li><li data-type='method'><a href="Payworks.html#closeGroup">closeGroup</a></li><li data-type='method'><a href="Payworks.html#forceAuth">forceAuth</a></li><li data-type='method'><a href="Payworks.html#postAuth">postAuth</a></li><li data-type='method'><a href="Payworks.html#preAuth">preAuth</a></li><li data-type='method'><a href="Payworks.html#reactivate">reactivate</a></li><li data-type='method'><a href="Payworks.html#reAuth">reAuth</a></li><li data-type='method'><a href="Payworks.html#refund">refund</a></li><li data-type='method'><a href="Payworks.html#request">request</a></li><li data-type='method'><a href="Payworks.html#reverse">reverse</a></li><li data-type='method'><a href="Payworks.html#suspend">suspend</a></li><li data-type='method'><a href="Payworks.html#verify">verify</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -75,12 +75,11 @@ class Payworks extends EventEmitter {
    * @param {string} params.card_number - Card Number
    * @param {string} params.card_exp - Card Expiry Dates (MM/YY)
    * @param {string} params.security_code - Security Code
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  auth (params, options, callback) {
+  auth (params, callback) {
     let schema = {
       amount: joi.number().required(),
       reference: joi.string(),
@@ -90,7 +89,12 @@ class Payworks extends EventEmitter {
       security_code: joi.string().max(4).required()
     }
 
-    return Payworks.request.call(this, 'AUTH', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'auth',
+      transactionName: 'AUTH'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -105,12 +109,11 @@ class Payworks extends EventEmitter {
    * @param {string} params.card_number - Card Number
    * @param {string} params.card_exp - Card Expiry Dates (MM/YY)
    * @param {string} params.security_code - Security Code
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  forceAuth (params, options, callback) {
+  forceAuth (params, callback) {
     let schema = {
       amount: joi.number().required(),
       reference: joi.string(),
@@ -120,7 +123,12 @@ class Payworks extends EventEmitter {
       security_code: joi.string().max(4).required()
     }
 
-    return Payworks.request.call(this, 'FORCED_AUTH', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'forceAuth',
+      transactionName: 'FORCED_AUTH'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -135,12 +143,11 @@ class Payworks extends EventEmitter {
    * @param {string} params.card_number - Card Number
    * @param {string} params.card_exp - Card Expiry Dates (MM/YY)
    * @param {string} params.security_code - Security Code
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  preAuth (params, options, callback) {
+  preAuth (params, callback) {
     let schema = {
       amount: joi.number().required(),
       reference: joi.string(),
@@ -150,7 +157,12 @@ class Payworks extends EventEmitter {
       security_code: joi.string().max(4).required()
     }
 
-    return Payworks.request.call(this, 'PREAUTH', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'preAuth',
+      transactionName: 'PREAUTH'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -161,18 +173,22 @@ class Payworks extends EventEmitter {
    * @param {Object} params - Request params
    * @param {number} params.amount - Amount
    * @param {string} params.reference - Reference
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  postAuth (params, options, callback) {
+  postAuth (params, callback) {
     let schema = {
       amount: joi.number().required(),
       reference: joi.string().required()
     }
 
-    return Payworks.request.call(this, 'POSTAUTH', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'postAuth',
+      transactionName: 'POSTAUTH'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -183,18 +199,22 @@ class Payworks extends EventEmitter {
    * @param {Object} params - Request params
    * @param {number} params.amount - Amount
    * @param {string} params.reference - Reference
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  reAuth (params, options, callback) {
+  reAuth (params, callback) {
     let schema = {
       amount: joi.number().required(),
       reference: joi.string().required()
     }
 
-    return Payworks.request.call(this, 'REAUTH', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'reAuth',
+      transactionName: 'REAUTH'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -205,18 +225,22 @@ class Payworks extends EventEmitter {
    * @param {Object} params - Request params
    * @param {number} params.amount - Amount
    * @param {string} params.reference - Reference
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  refund (params, options, callback) {
+  refund (params, callback) {
     let schema = {
       amount: joi.number().required(),
       reference: joi.string().required()
     }
 
-    return Payworks.request.call(this, 'REFUND', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'refund',
+      transactionName: 'REFUND'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -226,17 +250,21 @@ class Payworks extends EventEmitter {
    *
    * @param {Object} params - Request params
    * @param {string} params.reference - Reference
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  cancel (params, options, callback) {
+  cancel (params, callback) {
     let schema = {
       reference: joi.string().required()
     }
 
-    return Payworks.request.call(this, 'VOID', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'cancel',
+      transactionName: 'VOID'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -247,18 +275,22 @@ class Payworks extends EventEmitter {
    * @param {Object} params - Request params
    * @param {string} params.reference - Reference
    * @param {string} params.control_number - Control Number
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  reverse (params, options, callback) {
+  reverse (params, callback) {
     let schema = {
       reference: joi.string().required(),
       control_number: joi.string().max(30)
     }
 
-    return Payworks.request.call(this, 'REVERSAL', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'reverse',
+      transactionName: 'REVERSAL'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -267,15 +299,19 @@ class Payworks extends EventEmitter {
    * @public
    *
    * @param {Object} params - Request params
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  close (params, options, callback) {
+  close (params, callback) {
     let schema = {}
 
-    return Payworks.request.call(this, 'MCHNT_SETTLEMENT', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'close',
+      transactionName: 'MCHNT_SETTLEMENT'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -285,17 +321,21 @@ class Payworks extends EventEmitter {
    *
    * @param {Object} params - Request params
    * @param {string} params.group - Group
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  closeGroup (params, options, callback) {
+  closeGroup (params, callback) {
     let schema = {
       group: joi.string().required()
     }
 
-    return Payworks.request.call(this, 'GROUP_SETTLEMENT', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'closeGroup',
+      transactionName: 'GROUP_SETTLEMENT'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -306,18 +346,22 @@ class Payworks extends EventEmitter {
    * @param {Object} params - Request params
    * @param {string} params.reference - Reference
    * @param {string} params.control_number - Control Number
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  verify (params, options, callback) {
+  verify (params, callback) {
     let schema = {
       reference: joi.string(),
       control_number: joi.string()
     }
 
-    return Payworks.request.call(this, 'VERIFY', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'verify',
+      transactionName: 'VERIFY'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -327,17 +371,21 @@ class Payworks extends EventEmitter {
    *
    * @param {Object} params - Request params
    * @param {string} params.reference - Reference
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  suspend (params, options, callback) {
+  suspend (params, callback) {
     let schema = {
       reference: joi.string().required()
     }
 
-    return Payworks.request.call(this, 'LOCK', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'suspend',
+      transactionName: 'LOCK'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 
   /**
@@ -347,17 +395,21 @@ class Payworks extends EventEmitter {
    *
    * @param {Object} params - Request params
    * @param {string} params.reference - Reference
-   * @param {(Object|Function|undefined)} options
    * @param {(Function|undefined)} callback
    *
    * @return {PromiseEmitter}
    */
-  reactivate (params, options, callback) {
+  reactivate (params, callback) {
     let schema = {
       reference: joi.string().required()
     }
 
-    return Payworks.request.call(this, 'UNLOCK', schema, params, options, callback)
+    let options = {
+      eventPrefixName: 'reactivate',
+      transactionName: 'UNLOCK'
+    }
+
+    return Payworks.request.call(this, options, schema, params, callback)
   }
 }
 
@@ -369,8 +421,7 @@ class Payworks extends EventEmitter {
  * @method Payworks#request
  *
  * @param {Object} schema
- * @param {Object} params - Request params
- * @param {(Object|function|undefined)} options
+ * @param {Object} params - Request param
  * @param {(function|undefined)} callback
  *
  * @return {PromiseEmitter}
@@ -390,7 +441,7 @@ module.exports = Payworks
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 10 2016 13:51:46 GMT-0500 (CDT) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed May 11 2016 11:58:41 GMT-0500 (CDT) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
