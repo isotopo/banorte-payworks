@@ -35,7 +35,7 @@ describe('Payworks#refund', function () {
     ]
 
     payworks
-    .on('error', function (err) {
+    .on('refund.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -87,16 +87,16 @@ describe('Payworks#refund', function () {
 
   it('should obtain a result with events', function (done) {
     payworks
-    .on('approved', function () {
+    .on('refund.approved', function () {
       done()
     })
-    .on('declined', function () {
+    .on('refund.declined', function () {
       done()
     })
-    .on('rejected', function () {
+    .on('refund.rejected', function () {
       done()
     })
-    .on('notAnswer', function () {
+    .on('refund.notAnswer', function () {
       done()
     })
     .refund(this.params)

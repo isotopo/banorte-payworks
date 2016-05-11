@@ -33,7 +33,7 @@ describe('Payworks#reverse', function () {
     ]
 
     payworks
-    .on('error', function (err) {
+    .on('reverse.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -85,13 +85,13 @@ describe('Payworks#reverse', function () {
 
   it('should obtain a result with events', function (done) {
     payworks
-    .on('approved', function () {
+    .on('reverse.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('reverse.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('reverse.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('reverse.notAnswer', function () {
       done()
     })
     .reverse(this.params)

@@ -62,13 +62,13 @@ describe('Payworks#verify', function () {
 
   it('should obtain a result with events', function (done) {
     payworks
-    .on('approved', function () {
+    .on('verify.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('verify.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('verify.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('verify.notAnswer', function () {
       done()
     })
     .verify(this.params)

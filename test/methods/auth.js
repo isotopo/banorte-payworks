@@ -39,7 +39,7 @@ describe('Payworks#auth', function () {
       'security_code',
       'entry_mode'
     ]
-    payworks.on('error', function (err) {
+    payworks.on('auth.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -91,13 +91,13 @@ describe('Payworks#auth', function () {
 
   it('should obtain a result with events', function (done) {
     payworks
-    .on('approved', function () {
+    .on('auth.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('auth.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('auth.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('auth.notAnswer', function () {
       done()
     })
     payworks.auth(this.params)

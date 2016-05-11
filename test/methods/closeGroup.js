@@ -31,7 +31,7 @@ describe('Payworks#closeGroup', function () {
     let required = [
       'group'
     ]
-    payworks.on('error', function (err) {
+    payworks.on('closeGroup.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
         for (let param of required) {
@@ -81,13 +81,13 @@ describe('Payworks#closeGroup', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.on('approved', function () {
+    payworks.on('closeGroup.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('closeGroup.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('closeGroup.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('closeGroup.notAnswer', function () {
       done()
     })
     payworks.closeGroup(this.params)

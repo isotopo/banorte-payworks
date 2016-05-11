@@ -33,7 +33,7 @@ describe('Payworks#suspend', function () {
     ]
 
     payworks
-    .on('error', function (err) {
+    .on('suspend.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -85,13 +85,13 @@ describe('Payworks#suspend', function () {
 
   it('should obtain a result with events', function (done) {
     payworks
-    .on('approved', function () {
+    .on('suspend.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('suspend.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('suspend.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('suspend.notAnswer', function () {
       done()
     })
     .suspend(this.params)
