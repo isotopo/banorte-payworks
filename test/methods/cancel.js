@@ -32,7 +32,7 @@ describe('Payworks#cancel', function () {
       'reference'
     ]
 
-    payworks.cancel({}).on('error', function (err) {
+    payworks.on('cancel.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -47,6 +47,8 @@ describe('Payworks#cancel', function () {
         done(e)
       }
     })
+
+    payworks.cancel({})
   })
 
   it('should obtain a result with callbacks', function (done) {
@@ -83,13 +85,13 @@ describe('Payworks#cancel', function () {
 
   it('should obtain a result with events', function (done) {
     payworks.cancel(this.params)
-    .on('approved', function () {
+    payworks.on('cancel.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('cancel.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('cancel.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('cancel.notAnswer', function () {
       done()
     })
   })

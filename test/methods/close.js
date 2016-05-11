@@ -58,15 +58,15 @@ describe('Payworks#close', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.close(this.params)
-    .on('approved', function () {
+    payworks.on('close.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('close.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('close.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('close.notAnswer', function () {
       done()
     })
+    payworks.close(this.params)
   })
 })

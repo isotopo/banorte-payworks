@@ -31,13 +31,11 @@ describe('Payworks#closeGroup', function () {
     let required = [
       'group'
     ]
-
-    payworks.closeGroup({}).on('error', function (err) {
+    payworks.on('closeGroup.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
-
         for (let param of required) {
-          // Get error from each path
+        // Get error from each path
           let e = err.details.filter(e => e.path === param)
           assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
           assert.equal(e[0].type, 'any.required')
@@ -47,6 +45,7 @@ describe('Payworks#closeGroup', function () {
         done(e)
       }
     })
+    payworks.closeGroup({})
   })
 
   it('should obtain a result with callbacks', function (done) {
@@ -82,15 +81,15 @@ describe('Payworks#closeGroup', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.closeGroup(this.params)
-    .on('approved', function () {
+    payworks.on('closeGroup.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('closeGroup.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('closeGroup.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('closeGroup.notAnswer', function () {
       done()
     })
+    payworks.closeGroup(this.params)
   })
 })

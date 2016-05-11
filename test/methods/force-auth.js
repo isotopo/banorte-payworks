@@ -39,8 +39,7 @@ describe('Payworks#forceAuth', function () {
       'security_code',
       'entry_mode'
     ]
-
-    payworks.forceAuth({}).on('error', function (err) {
+    payworks.on('forceAuth.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
 
@@ -55,6 +54,7 @@ describe('Payworks#forceAuth', function () {
         done(e)
       }
     })
+    payworks.forceAuth({})
   })
 
   it('should obtain a result with callbacks', function (done) {
@@ -90,15 +90,15 @@ describe('Payworks#forceAuth', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.forceAuth(this.params)
-    .on('approved', function () {
+    payworks.on('forceAuth.approved', function () {
       done()
-    }).on('declined', function () {
+    }).on('forceAuth.declined', function () {
       done()
-    }).on('rejected', function () {
+    }).on('forceAuth.rejected', function () {
       done()
-    }).on('notAnswer', function () {
+    }).on('forceAuth.notAnswer', function () {
       done()
     })
+    payworks.forceAuth(this.params)
   })
 })
