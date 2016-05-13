@@ -1,0 +1,13 @@
+{
+  "name": "banorte-payworks-koa",
+  "version": "1.0.0",
+  "description": "Example using Banorte Payworks",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "koa": "^1.2.0",
+    "koa-bodyparser": "^2.1.0"
+  }
+}
