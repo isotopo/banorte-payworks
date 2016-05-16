@@ -1,0 +1,41 @@
+<!-- Modal Structure -->
+<div id="form" class="modal modal-fixed-footer" style="width: 450px">
+  <form role="form">
+    <div class="modal-content">
+      <h4>Checkout</h4>
+      <div class="status white-text center hide" style="margin: 20px 10px; padding: 10px"></div>
+      <div class="spinner hide" style="text-align: center; margin: 20px 0">{% include 'partials/spinner.html' %}</div>
+
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" name="first_name" type="text" class="validate" required>
+          <label for="first_name">Holder's First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" name="last_name" type="text" class="validate" required>
+          <label for="last_name">Holder's Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="cc" name="cc" type="text" class="validate" placeholder="4111111111111111" pattern="[0-9]{13,16}" required>
+          <label for="cc">Credit Card</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="security_code" name="security_code" type="text" placeholder="123" class="validate" max="4" required>
+          <label for="security_code">Security Code</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="expiry_date" name="expiry_date" type="text" placeholder="MM/YY" class="validate" max="4" required>
+          <label for="expiry_date">Date Expiration (MMYY)</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" disabled class="waves-effect waves-light btn light-blue accent-3">Pay <span class="total-price"></span><i class="material-icons right">shopping_cart</i></a>
+    </div>
+  </form>
+
+</div>
