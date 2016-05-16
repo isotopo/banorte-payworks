@@ -1,0 +1,14 @@
+{% extends "layouts/main.html" %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+  {% for product in products %}
+    <div class="col m6 l4">
+      {% include "partials/item.html" %}
+    </div>
+  {% endfor %}
+  </div>
+{% endblock %}
