@@ -1,3 +1,9 @@
+0.2.1 / 2016-05-16
+==================
+
+* add examples
+* add support to change default auth options
+
 0.2.0 / 2016-05-11
 ==================
 
