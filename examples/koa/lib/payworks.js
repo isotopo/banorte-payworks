@@ -1,6 +1,6 @@
 'use strict'
 
-const Payworks = require('banorte-payworks')
+const Payworks = require('../../../lib')
 const debug = require('debug')('payworks')
 
 let payworks = new Payworks({
