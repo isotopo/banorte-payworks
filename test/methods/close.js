@@ -59,12 +59,18 @@ describe('Payworks#close', function () {
 
   it('should obtain a result with events', function (done) {
     payworks.on('close.approved', function () {
+      console.log('en test se aprobo')
       done()
     }).on('close.declined', function () {
+      console.log('en test se declino')
+
       done()
     }).on('close.rejected', function () {
+      console.log('en test se reject')
+
       done()
     }).on('close.notAnswer', function () {
+      console.log('en test se norAnse')
       done()
     })
     payworks.close(this.params)

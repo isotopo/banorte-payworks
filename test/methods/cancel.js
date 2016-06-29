@@ -84,7 +84,6 @@ describe('Payworks#cancel', function () {
   })
 
   it('should obtain a result with events', function (done) {
-    payworks.cancel(this.params)
     payworks.on('cancel.approved', function () {
       done()
     }).on('cancel.declined', function () {
@@ -94,5 +93,6 @@ describe('Payworks#cancel', function () {
     }).on('cancel.notAnswer', function () {
       done()
     })
+    payworks.cancel(this.params)
   })
 })

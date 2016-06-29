@@ -92,12 +92,17 @@ describe('Payworks#auth', function () {
   it('should obtain a result with events', function (done) {
     payworks
     .on('auth.approved', function () {
+      console.log('en aauth')
       done()
     }).on('auth.declined', function () {
+      console.log('en decline')
+
       done()
     }).on('auth.rejected', function () {
+      console.log('en reject')
       done()
     }).on('auth.notAnswer', function () {
+      console.log('en notans')
       done()
     })
     payworks.auth(this.params)
