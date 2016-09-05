@@ -20,12 +20,13 @@ describe('Payworks#refund', function () {
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.refund()
-      done('should throw an error when params are missing')
-    } catch (e) {
+    payworks.refund()
+      .then(() => {
+        done('should throw an error when params are missing')
+      })
+    .catch(() => {
       done()
-    }
+    })
   })
 
   it('should validate params', function (done) {

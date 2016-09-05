@@ -20,12 +20,12 @@ describe('Payworks#reAuth', function () {
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.reAuth()
-      done('should throw an error when params are missing')
-    } catch (e) {
-      done()
-    }
+    payworks.reAuth()
+      .then(() => {
+        done('should throw an error when params are missing')
+      }).catch(() => {
+        done()
+      })
   })
 
   it('should validate params', function (done) {

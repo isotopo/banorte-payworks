@@ -24,12 +24,13 @@ describe('Payworks#preAuth', function () {
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.preAuth()
-      done('should throw an error when params are missing')
-    } catch (e) {
-      done()
-    }
+    payworks.preAuth()
+      .then(() => {
+        done('should throw an error when params are missing')
+      })
+      .catch(() => {
+        done()
+      })
   })
 
   it('should validate params', function (done) {

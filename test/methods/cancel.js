@@ -19,12 +19,11 @@ describe('Payworks#cancel', function () {
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.cancel()
+    payworks.cancel().then((value) => {
       done('should throw an error when params are missing')
-    } catch (e) {
+    }).catch(() => {
       done()
-    }
+    })
   })
 
   it('should validate params', function (done) {

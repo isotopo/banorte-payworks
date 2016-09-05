@@ -56,7 +56,6 @@ describe('Utils#Request', function () {
   })
 
   it('should not make a request without `password` param', function (done) {
-    console.log('params', params)
     request({
       user: params.USER,
       merchant_id: params.MERCHANT_ID,

@@ -24,12 +24,13 @@ describe('Payworks#auth', function () {
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.auth()
+    payworks.auth()
+    .then(() => {
       done('should throw an error when params are missing')
-    } catch (e) {
+    })
+    .catch(() => {
       done()
-    }
+    })
   })
 
   it('should validate params', function (done) {
