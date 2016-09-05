@@ -15,6 +15,7 @@ describe('Payworks#forceAuth', function () {
   beforeEach(function () {
     this.params = {
       amount: 189.00,
+      control_number: '4324234234',
       entry_mode: 'MANUAL',
       card_number: '4111111111111111',
       card_exp: '1220',

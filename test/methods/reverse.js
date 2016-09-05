@@ -29,17 +29,17 @@ describe('Payworks#reverse', function () {
 
   it('should validate params', function (done) {
     let required = [
-      'reference'
-    ]
+      'reference' ]
 
     payworks
     .on('reverse.error', function (err) {
       try {
         assert.equal(err.name, 'ValidationError')
-
+        console.log('error', err)
         for (let param of required) {
           // Get error from each path
           let e = err.details.filter(e => e.path === param || e.path === param.toUpperCase())
+          console.log('filtered', e)
           assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
           assert.equal(e[0].type, 'any.required')
         }

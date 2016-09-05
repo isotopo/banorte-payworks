@@ -14,6 +14,7 @@ let payworks = new Payworks({
 describe('Payworks#auth', function () {
   beforeEach(function () {
     this.params = {
+      control_number: '433252443',
       amount: 189.00,
       entry_mode: 'MANUAL',
       card_number: '4111111111111111',
@@ -92,17 +93,12 @@ describe('Payworks#auth', function () {
   it('should obtain a result with events', function (done) {
     payworks
     .on('auth.approved', function () {
-      console.log('en aauth')
       done()
     }).on('auth.declined', function () {
-      console.log('en decline')
-
       done()
     }).on('auth.rejected', function () {
-      console.log('en reject')
       done()
     }).on('auth.notAnswer', function () {
-      console.log('en notans')
       done()
     })
     payworks.auth(this.params)
