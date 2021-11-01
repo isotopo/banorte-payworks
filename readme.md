@@ -1,7 +1,5 @@
-[Unmaintained]
-<img src="http://res.cloudinary.com/cloudinary4yopping/image/upload/v1458266051/logos/futurecommerce.png" alt="Futurecommerce" align="right" width="250" height="103"/>
+This code isn't maintained anymore and The Mexican Bank Banorte doesn't demostrate any interest on it. If you want to use it, please be ahead, I gladdly will accept pull-requests after review it.
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](http://standardjs.com)
 Banorte Payworks for Node.js
 ================================
 
